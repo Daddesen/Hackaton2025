@@ -1,3 +1,7 @@
+*{
+    font-family:'Courier New', Courier, monospace;
+}
+
 .first{
     transform: rotateY(40deg);
     transform: translate(20vw 50vh);
