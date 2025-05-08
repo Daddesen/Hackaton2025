@@ -34,9 +34,10 @@
     
 }
 
-.slider{
+.slide{
+    box-shadow: 5px 5px black;
     border-radius: 2em;
-    border: #CCC 1px;
+    border: #CCC 0.1em;
     box-shadow: black 0.5em;
     display: inline-block;
 }
