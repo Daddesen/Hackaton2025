@@ -50,6 +50,7 @@
     flex: 0 0 auto;
     width: 100%; /* or set a specific width like 600px */
     position: relative;
+    padding: 1em;
   }
 
   .slider img {
