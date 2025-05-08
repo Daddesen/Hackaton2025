@@ -43,3 +43,44 @@
     transform: translate(50vw 50vh);
     z-index: 5;
 }
+
+
+  .slider {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    width: 100%;
+  }
+
+  .slider > div {
+    flex: 0 0 auto;
+    width: 100%; /* or set a specific width like 600px */
+    scroll-snap-align: start;
+    position: relative;
+  }
+
+  .slider img {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  .buttonL, .buttonR {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 10;
+    background-color: rgba(0,0,0,0.5);
+    border: none;
+    color: white;
+    padding: 1rem;
+    cursor: pointer;
+  }
+
+  .buttonL {
+    left: 0;
+  }
+
+  .buttonR {
+    right: 0;
+  }
