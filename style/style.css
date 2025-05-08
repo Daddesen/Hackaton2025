@@ -31,6 +31,8 @@
 
 .slider{
     border-radius: 2em;
+    border: #CCC 1px;
+    box-shadow: black 0.5em;
 }
 
 .slideinformation{
