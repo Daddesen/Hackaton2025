@@ -1,5 +1,6 @@
 *{
     font-family:'Courier New', Courier, monospace;
+    overflow-x: hidden;
 }
 
 .first{
@@ -37,30 +38,21 @@
     border-radius: 2em;
     border: #CCC 1px;
     box-shadow: black 0.5em;
+    display: inline-block;
 }
 
 .slideinformation{
     transform: translate(50vw 50vh);
     z-index: 5;
 }
-
-
-  .slider {
-    display: flex;
-    overflow-x: auto;
-    scroll-snap-type: x mandatory;
-    width: 100%;
-  }
-
   .slider > div {
     flex: 0 0 auto;
     width: 100%; /* or set a specific width like 600px */
-    scroll-snap-align: start;
     position: relative;
   }
 
   .slider img {
-    width: 100%;
+    width: 20vw;
     height: auto;
     display: block;
   }
