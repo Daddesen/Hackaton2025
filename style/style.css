@@ -1,0 +1,39 @@
+.first{
+    transform: rotateY(40deg);
+    transform: translate(20vw 50vh);
+    perspective: 10em;
+    z-index: 2;
+}
+.second{
+    transform: rotateY(20deg);
+    transform: translate(30vw 50vh);
+    perspective: 5em;
+    z-index: 3;
+}
+.third{
+    perspective: 1em;
+    transform: translate(50vw 50vh);
+    z-index: 4;
+}
+.fourth{
+    transform: rotate(340deg);
+    transform: translate(70vw 50vh);
+    perspective: 5em;
+    z-index: 3;
+}
+.fifth{
+    transform: rotateY(320deg);
+    transform: translate(80vw 50vh);
+    perspective: 10em;
+    z-index: 2;
+    
+}
+
+.slider{
+    border-radius: 2em;
+}
+
+.slideinformation{
+    transform: translate(50vw 50vh);
+    z-index: 5;
+}
