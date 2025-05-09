@@ -1,4 +1,9 @@
-const modelsArray = ["Assembly1.glb", "Assembly1.glb", "share.glb"];
+const modelsArray = [
+  "Assembly1.glb",
+  "Assembly2.glb",
+  "Assembly3.glb",
+  "share.glb",
+];
 const parts = [
   ["Solid1", "Solid1_10"], // Ram
   ["Solid1_22", "Solid1_23", "Solid1_28", "Solid1_29"], // Hjul
@@ -38,8 +43,17 @@ const configurations = [
   [],
 ];
 const loader = new GLTFLoader();
+
 let activeComponentIndex = 0; // default to first component (Ram)
 
+function k1() {
+  if (currentModelIndex === targetModelIndex) {
+    targetModelIndex = 1;
+  }
+
+  loadModel(modelsArray[targetModelIndex]);
+  currentModelIndex = targetModelIndex;
+}
 /*
 modelsArray.forEach((modelPath) => {
   loader.load(
@@ -124,19 +138,42 @@ document.querySelectorAll(".color-box").forEach((box, i) => {
   });
 });
 
-document.querySelectorAll(".component").forEach((component) => {
+let currentModelIndex = 0; // tracks current loaded model index
+
+document.querySelectorAll(".component").forEach((component, index) => {
   component.addEventListener("click", () => {
+    let targetModelIndex = index;
+
+    // Go back to model 0 if the same component is clicked again
+    if (currentModelIndex === targetModelIndex) {
+      targetModelIndex = 0;
+    }
+
+    loadModel(modelsArray[targetModelIndex]);
+    currentModelIndex = targetModelIndex;
+
+    // Update UI
     document
       .querySelectorAll(".component")
       .forEach((c) => (c.dataset.active = "false"));
     component.dataset.active = "true";
-
-    activeComponentIndex = index; // <--- Set current index
     document.getElementById("menu-header").textContent =
       component.textContent.trim();
+  });
+});
 
-    highlightPartGroup(index); // optional, to highlight when selected
-    // Här kan du lägga till logik för att uppdatera 3D-modellen
+let shownmodel = 0;
+document.querySelectorAll(".color-box").forEach((box, i) => {
+  box.addEventListener("click", () => {
+    const clickedIndex = parseInt(box.id.charAt(1), 10);
+
+    if (shownmodel !== clickedIndex) {
+      shownmodel = clickedIndex;
+    } else {
+      shownmodel = 0; // Toggle back to base model
+    }
+
+    loadModel(modelsArray[shownmodel]); // ❌ This reloads a GLB file!
   });
 });
 
