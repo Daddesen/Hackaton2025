@@ -158,7 +158,8 @@ document.querySelectorAll(".component").forEach((component) => {
 document.addEventListener("DOMContentLoaded", () => {
   const klarButton = document.getElementById("klar");
   klarButton.addEventListener("click", () => {
-    window.location.href = "done.html"; // Replace with your desired page
+    //window.location.href = "done.html"; // Replace with your desired page
+    alert("Tack för ditt köp!!")
   });
 });
 
@@ -174,7 +175,7 @@ document.querySelectorAll(".component").forEach((component) => {
 document.addEventListener("DOMContentLoaded", () => {
   const klarButton = document.getElementById("klar");
   klarButton.addEventListener("click", () => {
-    window.location.href = "done.html"; // Redirect when "Klar" is clicked
+    //window.location.href = "done.html"; // Redirect when "Klar" is clicked
   });
 });
 
@@ -292,9 +293,9 @@ function init3D() {
       });
 
       // Create a small red sphere at the pivot point
-      const geometry = new THREE.SphereGeometry(0.1, 32, 32); // Small sphere
+      /*const geometry = new THREE.SphereGeometry(0.1, 32, 32); // Small sphere
       const material = new THREE.MeshBasicMaterial({ color: 0xff0000 }); // Red color
-      pivotPoint = new THREE.Mesh(geometry, material);
+      pivotPoint = new THREE.Mesh(geometry, material);*/
 
       // Add the pivot point to the scene at the center
       scene.add(pivotPoint);
