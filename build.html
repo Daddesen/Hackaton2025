@@ -6,8 +6,10 @@
     <title>Designerhemsida</title>
     <link rel="stylesheet" href="styles.css" />
 
+
     <!-- IMPORTANT: Removed old global Three.js scripts -->
     <!-- Use ES modules in script.js instead -->
+
 
     <!-- Importmap for module resolution -->
     <script type="importmap">
@@ -18,15 +20,25 @@
         }
       }
     </script>
-    <script type="module" src="script.js"></script>
+    <script type="module" src="script3.js"></script>
   </head>
   <body>
     <div class="container">
       <aside class="side-menu">
         <div class="menu-header" id="menu-header"><h1>Komponent 1</h1></div>
         <div class="menu-options">
-          <div class="color-box" id="k1">Konfigration 1</div>
-          <div class="color-box" id="k2">Konfigration 2</div>
+          <div
+            class="color-box"
+            id="k1"
+            style="background-image: url('/image.png'); background-size: cover"
+          ></div>
+
+
+          <div
+            class="color-box"
+            id="k2"
+            style="background-image: url('/image1.png'); background-size: cover"
+          ></div>
           <div class="color-box" id="k3">Konfigration 3</div>
           <div class="color-box" id="k4">Konfigration 4</div>
           <div class="color-box" id="k5">Konfigration 5</div>
@@ -52,6 +64,7 @@
           <div class="color-circle" data-color="#000000" title="Svart"></div>
           <div class="color-circle" data-color="#ffffff" title="Vit"></div>
           <div class="color-circle" data-color="#aaaaaa" title="Grå"></div>
+
 
           <div
             class="color-circle"
@@ -91,6 +104,7 @@
             title="Green Yellow"
           ></div>
 
+
           <div
             class="color-circle"
             data-color="#7fff00"
@@ -104,6 +118,7 @@
         </div>
       </aside>
 
+
       <main class="main-content">
         <div class="viewer-container">
           <canvas id="product-viewer"></canvas>
@@ -111,6 +126,7 @@
         </div>
       </main>
     </div>
+
 
     <div class="component-selector">
       <div class="component" id="c0">Tillbaka</div>
@@ -126,3 +142,7 @@
     </div>
   </body>
 </html>
+
+
+
+
