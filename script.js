@@ -26,7 +26,20 @@ const parts = [
   ], // Gångjärn
   ["Solid1_24", "Solid1_25", "Solid1_26", "Solid1_27"], //Hjulbult
 ];
+const configurations = [
+  ["red", "blue", "green", "yellow", "orange", "black", "white"],
+  [],
+  [],
+  [],
+  [],
+  [],
+  [],
+  [],
+  [],
+];
 const loader = new GLTFLoader();
+let activeComponentIndex = 0; // default to first component (Ram)
+
 /*
 modelsArray.forEach((modelPath) => {
   loader.load(
@@ -45,16 +58,69 @@ modelsArray.forEach((modelPath) => {
 });
 */
 // Get all the color boxes
-const colorBoxes = document.querySelectorAll(".color-box");
+const appliedColors = new Array(parts.length).fill("#aaaaaa"); // default color
 
-// Add event listener to each color box
-colorBoxes.forEach((box) => {
+function applyColorToPartGroup(index, colorHex) {
+  const group = parts[index];
+  if (!group || !model) return;
+
+  appliedColors[index] = colorHex; // Save the selected color
+
+  model.traverse((child) => {
+    if (child.isMesh && group.includes(child.name)) {
+      child.material = child.material.clone(); // avoid shared state
+      child.material.color.set(colorHex);
+    }
+  });
+}
+
+document.querySelectorAll(".color-circle").forEach((circle) => {
+  circle.style.backgroundColor = circle.dataset.color;
+
+  circle.addEventListener("click", () => {
+    const selectedColor = circle.dataset.color;
+    applyColorToPartGroup(activeComponentIndex, selectedColor);
+  });
+});
+
+const colors = [
+  "#ff0000", // Red
+  "#ff69b4", // Pink
+  "#ffa500", // Orange
+  "#ffff00", // Yellow
+  "#808000", // Olive
+  "#00ff00", // Green
+  "#00ffff", // Cyan
+  "#0000ff", // Blue
+  "#800080", // Purple
+  "#a52a2a", // Brown
+  "#000000", // Black
+  "#ffffff", // White
+  "#aaaaaa", // Default/Gray
+  "#c71585", // Medium Violet Red
+  "#d3d3d3", // Light Gray
+  "#ffd700", // Gold
+  "#8b4513", // Saddle Brown
+  "#32cd32", // Lime Green
+  "#ff6347", // Tomato
+  "#9932cc", // Dark Orchid
+  "#ff4500", // Orange Red
+  "#adff2f", // Green Yellow
+  "#7fff00", // Chartreuse
+  "#4682b4", // Steel Blue
+];
+
+document.querySelectorAll(".color-box").forEach((box, i) => {
   box.addEventListener("click", () => {
-    // Remove 'active' class from all color boxes
-    colorBoxes.forEach((b) => b.classList.remove("active"));
-
-    // Add 'active' class to the clicked box
+    // Remove active state
+    document
+      .querySelectorAll(".color-box")
+      .forEach((b) => b.classList.remove("active"));
     box.classList.add("active");
+
+    // Apply color to currently active component
+    const selectedColor = configurationColors[i] || "#aaaaaa";
+    applyColorToPartGroup(activeComponentIndex, selectedColor);
   });
 });
 
@@ -64,6 +130,12 @@ document.querySelectorAll(".component").forEach((component) => {
       .querySelectorAll(".component")
       .forEach((c) => (c.dataset.active = "false"));
     component.dataset.active = "true";
+
+    activeComponentIndex = index; // <--- Set current index
+    document.getElementById("menu-header").textContent =
+      component.textContent.trim();
+
+    highlightPartGroup(index); // optional, to highlight when selected
     // Här kan du lägga till logik för att uppdatera 3D-modellen
   });
 });
@@ -160,26 +232,54 @@ function init3D() {
       model.rotation.set(0, Math.PI / 1, 0); // Example: Rotate 45 degrees along the Y-axis
       model.rotation.set((1.2 * Math.PI) / 1, 3.6, Math.PI / 1); // Rotate 45 degrees along the X-axis
       /* Style all parts*/
-      model.traverse((child) => {
-        if (child.isMesh) {
-          child.material.color.set(0xaaaaaa); // Set green color (0x00ff00 is green)
-        }
-      });
+      // Set default and highlight colors
+      const defaultColor = new THREE.Color(0xaaaaaa);
+      const highlightColor = new THREE.Color(0xffffff); // Light color for selection
 
-      model.traverse((child) => {
-        if (child.isMesh) {
-          console.log(child.name); // Log the mesh names to see them
-          if (child.name === "Solid1_31") {
-            // Clone the material to avoid modifying other meshes using the same material
-            const newMaterial = child.material.clone();
-            newMaterial.color.set(0xffffff); // Change color to red
-            newMaterial.emissive.set(0x666666); // Add emissive property to make it glow
-
-            child.material = newMaterial; // Apply the new material
+      // Utility to reset all parts to default color
+      function resetModelColors() {
+        model.traverse((child) => {
+          if (child.isMesh) {
+            child.material = child.material.clone(); // Clone to prevent sharing
+            child.material.color.copy(defaultColor);
           }
-        }
-      });
+        });
+      }
 
+      // Utility to highlight a part group by index
+      function highlightPartGroup(index) {
+        if (!model) return;
+
+        model.traverse((child) => {
+          if (!child.isMesh) return;
+
+          // Find which group this mesh belongs to
+          let foundIndex = parts.findIndex((group) =>
+            group.includes(child.name)
+          );
+          if (foundIndex !== -1) {
+            const savedColor = appliedColors[foundIndex] || "#aaaaaa";
+            child.material = child.material.clone();
+            child.material.color.set(savedColor);
+          }
+        });
+      }
+
+      // Hook component buttons to color logic
+      document.querySelectorAll(".component").forEach((component, index) => {
+        component.addEventListener("click", () => {
+          activeComponentIndex = index; // now it's correctly scoped
+          document
+            .querySelectorAll(".component")
+            .forEach((c) => (c.dataset.active = "false"));
+          component.dataset.active = "true";
+
+          document.getElementById("menu-header").textContent =
+            component.textContent.trim();
+
+          highlightPartGroup(index); // highlight selected part group
+        });
+      });
       // Create a small red sphere at the pivot point
       const geometry = new THREE.SphereGeometry(0.1, 32, 32); // Small sphere
       const material = new THREE.MeshBasicMaterial({ color: 0xff0000 }); // Red color
