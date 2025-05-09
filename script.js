@@ -43,17 +43,10 @@ const configurations = [
   [],
 ];
 const loader = new GLTFLoader();
+let indexx = 0;
 
 let activeComponentIndex = 0; // default to first component (Ram)
 
-function k1() {
-  if (currentModelIndex === targetModelIndex) {
-    targetModelIndex = 1;
-  }
-
-  loadModel(modelsArray[targetModelIndex]);
-  currentModelIndex = targetModelIndex;
-}
 /*
 modelsArray.forEach((modelPath) => {
   loader.load(
@@ -124,20 +117,6 @@ const colors = [
   "#4682b4", // Steel Blue
 ];
 
-document.querySelectorAll(".color-box").forEach((box, i) => {
-  box.addEventListener("click", () => {
-    // Remove active state
-    document
-      .querySelectorAll(".color-box")
-      .forEach((b) => b.classList.remove("active"));
-    box.classList.add("active");
-
-    // Apply color to currently active component
-    const selectedColor = configurationColors[i] || "#aaaaaa";
-    applyColorToPartGroup(activeComponentIndex, selectedColor);
-  });
-});
-
 let currentModelIndex = 0; // tracks current loaded model index
 
 document.querySelectorAll(".component").forEach((component, index) => {
@@ -159,21 +138,6 @@ document.querySelectorAll(".component").forEach((component, index) => {
     component.dataset.active = "true";
     document.getElementById("menu-header").textContent =
       component.textContent.trim();
-  });
-});
-
-let shownmodel = 0;
-document.querySelectorAll(".color-box").forEach((box, i) => {
-  box.addEventListener("click", () => {
-    const clickedIndex = parseInt(box.id.charAt(1), 10);
-
-    if (shownmodel !== clickedIndex) {
-      shownmodel = clickedIndex;
-    } else {
-      shownmodel = 0; // Toggle back to base model
-    }
-
-    loadModel(modelsArray[shownmodel]); // ❌ This reloads a GLB file!
   });
 });
 
@@ -251,7 +215,7 @@ function init3D() {
   // Load the 3D model (use the path to your GLTF/GLB file)
   const loader = new GLTFLoader();
   loader.load(
-    modelsArray[0],
+    modelsArray[indexx],
     (gltf) => {
       model = gltf.scene;
 
@@ -329,9 +293,6 @@ function init3D() {
       });
 
       // Create a small red sphere at the pivot point
-      const geometry = new THREE.SphereGeometry(0.1, 32, 32); // Small sphere
-      const material = new THREE.MeshBasicMaterial({ color: 0xff0000 }); // Red color
-      pivotPoint = new THREE.Mesh(geometry, material);
 
       // Add the pivot point to the scene at the center
       scene.add(pivotPoint);
@@ -350,6 +311,26 @@ function init3D() {
   canvas.addEventListener("pointerup", onPointerUp, false);
 }
 
+// Add event listener to color-box k1
+document.getElementById("k1").addEventListener("click", () => {
+  // Change the model to the second item in modelsArray (index 1)
+  loadModel(modelsArray[1]);
+});
+
+let shownmodel = 0;
+document.querySelectorAll(".color-box").forEach((box, i) => {
+  box.addEventListener("click", () => {
+    indexx = parseInt(box.id.charAt(1), 10);
+
+    if (shownmodel !== indexx) {
+      shownmodel = indexx;
+    } else {
+      indexx = 0; // Toggle back to base model
+    }
+
+    init3D(); // ❌ This reloads a GLB file!
+  });
+});
 function animate() {
   requestAnimationFrame(animate);
 
