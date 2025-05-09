@@ -367,6 +367,21 @@ document.getElementById("k1").addEventListener("click", () => {
 
 let shownmodel = 0;
 
+document.querySelectorAll(".color-box").forEach((box, i) => {
+  box.addEventListener("click", () => {
+    indexx = parseInt(box.id.charAt(1), 10);
+
+
+    if (shownmodel !== indexx) {
+      shownmodel = indexx;
+    } else {
+      indexx = 0; // Toggle back to base model
+    }
+
+
+    init3D(); // ❌ This reloads a GLB file!
+  });
+});
 
 function animate() {
   requestAnimationFrame(animate);
