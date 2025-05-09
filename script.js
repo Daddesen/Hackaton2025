@@ -1,4 +1,9 @@
-const modelsArray = ["Assembly1.glb", "Assembly1.glb", "share.glb"];
+const modelsArray = [
+  "Assembly1.glb",
+  "Assembly2.glb",
+  "Assembly3.glb",
+  "share.glb",
+];
 const parts = [
   ["Solid1", "Solid1_10"], // Ram
   ["Solid1_22", "Solid1_23", "Solid1_28", "Solid1_29"], // Hjul
@@ -38,6 +43,8 @@ const configurations = [
   [],
 ];
 const loader = new GLTFLoader();
+let indexx = 0;
+
 let activeComponentIndex = 0; // default to first component (Ram)
 
 /*
@@ -110,33 +117,27 @@ const colors = [
   "#4682b4", // Steel Blue
 ];
 
-document.querySelectorAll(".color-box").forEach((box, i) => {
-  box.addEventListener("click", () => {
-    // Remove active state
-    document
-      .querySelectorAll(".color-box")
-      .forEach((b) => b.classList.remove("active"));
-    box.classList.add("active");
+let currentModelIndex = 0; // tracks current loaded model index
 
-    // Apply color to currently active component
-    const selectedColor = configurationColors[i] || "#aaaaaa";
-    applyColorToPartGroup(activeComponentIndex, selectedColor);
-  });
-});
-
-document.querySelectorAll(".component").forEach((component) => {
+document.querySelectorAll(".component").forEach((component, index) => {
   component.addEventListener("click", () => {
+    let targetModelIndex = index;
+
+    // Go back to model 0 if the same component is clicked again
+    if (currentModelIndex === targetModelIndex) {
+      targetModelIndex = 0;
+    }
+
+    loadModel(modelsArray[targetModelIndex]);
+    currentModelIndex = targetModelIndex;
+
+    // Update UI
     document
       .querySelectorAll(".component")
       .forEach((c) => (c.dataset.active = "false"));
     component.dataset.active = "true";
-
-    activeComponentIndex = index; // <--- Set current index
     document.getElementById("menu-header").textContent =
       component.textContent.trim();
-
-    highlightPartGroup(index); // optional, to highlight when selected
-    // Här kan du lägga till logik för att uppdatera 3D-modellen
   });
 });
 
@@ -214,7 +215,7 @@ function init3D() {
   // Load the 3D model (use the path to your GLTF/GLB file)
   const loader = new GLTFLoader();
   loader.load(
-    modelsArray[0],
+    modelsArray[indexx],
     (gltf) => {
       model = gltf.scene;
 
@@ -292,9 +293,6 @@ function init3D() {
       });
 
       // Create a small red sphere at the pivot point
-      const geometry = new THREE.SphereGeometry(0.1, 32, 32); // Small sphere
-      const material = new THREE.MeshBasicMaterial({ color: 0xff0000 }); // Red color
-      pivotPoint = new THREE.Mesh(geometry, material);
 
       // Add the pivot point to the scene at the center
       scene.add(pivotPoint);
@@ -313,6 +311,26 @@ function init3D() {
   canvas.addEventListener("pointerup", onPointerUp, false);
 }
 
+// Add event listener to color-box k1
+document.getElementById("k1").addEventListener("click", () => {
+  // Change the model to the second item in modelsArray (index 1)
+  loadModel(modelsArray[1]);
+});
+
+let shownmodel = 0;
+document.querySelectorAll(".color-box").forEach((box, i) => {
+  box.addEventListener("click", () => {
+    indexx = parseInt(box.id.charAt(1), 10);
+
+    if (shownmodel !== indexx) {
+      shownmodel = indexx;
+    } else {
+      indexx = 0; // Toggle back to base model
+    }
+
+    init3D(); // ❌ This reloads a GLB file!
+  });
+});
 function animate() {
   requestAnimationFrame(animate);
 
