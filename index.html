@@ -1,12 +1,110 @@
 <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pimp My Gear</title>
+  <link rel="icon" href="source/logo.png">
+  <link rel="stylesheet" href="style/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+</head>
+
+<header>
+  <a href="index.html"><img src="source/logo.png" alt="" class="logo"> </a>
+  <button class="sideNavOpener" onclick="toggleSideNav()">☰</button>
+</header>
+<hr>
 <body>
-  <p>hej</p>
-  <p>hej</p>
-  <p></p>
-  <p></p>
-  <p>hej</p>
-  <p>geh</p>
-  <a href="contact.html">contacts</a>
-  <p>gjkjgiugiugiyjg</p>
-  <p></p>
+  <div class="sideNav">
+  <h1>Pimp My Gear</h1>
+
+  <div class="sideNavItem">
+    <button class="sideNavButton" onclick="toggleContent('menyContent')">Meny</button>
+    <div id="menyContent" class="sideNavContent">
+      <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Odit, omnis. Itaque iusto eum ut magnam deleniti id autem unde eveniet recusandae tempora, ullam sequi quis accusantium delectus excepturi facilis error.</p>
+    </div>
+  </div>
+
+  <div class="sideNavItem">
+    <button class="sideNavButton" onclick="toggleContent('omOssContent')">Om Oss</button>
+    <div id="omOssContent" class="sideNavContent">
+      <p>Denna sidan hjälper er genom... Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta voluptatem nam numquam deleniti ipsum ex error minima atque voluptas provident iusto qui, reprehenderit eos nobis iste hic alias commodi dolore.</p>
+    </div>
+  </div>
+
+  <div class="sideNavItem">
+    <button class="sideNavButton" onclick="toggleContent('hjalpContent')">Hjälp</button>
+    <div id="hjalpContent" class="sideNavContent">
+      <p>Behöver du hjälp? Kontakta oss på... Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellendus molestias dignissimos aliquam atque qui, minima quos sint unde, aliquid provident non deleniti fugit, accusantium ipsam at delectus corrupti beatae laboriosam?</p>
+    </div>
+  </div>
+</div>
+
+  <script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+  import { getDatabase, ref, runTransaction } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+  import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-analytics.js";
+
+ const firebaseConfig = {
+  apiKey: "AIzaSyD6pXVnnt3r5DkJiTd2nIof5-I9dp9crWM",
+  authDomain: "pmgdb-c787b.firebaseapp.com",
+  projectId: "pmgdb-c787b",
+  storageBucket: "pmgdb-c787b.appspot.com",
+  messagingSenderId: "691927928441",
+  appId: "1:691927928441:web:4207256ef0862fb7828ea8",
+  measurementId: "G-07PD5DVLLL",
+  databaseURL: "https://pmgdb-c787b-default-rtdb.europe-west1.firebasedatabase.app"  // ← Lägg till denna rad!
+};
+
+
+  const app = initializeApp(firebaseConfig);
+  const analytics = getAnalytics(app);
+  const db = getDatabase(app);
+
+  window.logClick = function (buttonNumber) {
+    const countRef = ref(db, 'buttonClicks/button' + buttonNumber);
+    runTransaction(countRef, (currentValue) => {
+      return (currentValue || 0) + 1;
+    }).then(() => {
+      console.log("Klick loggat för knapp", buttonNumber);
+    }).catch((error) => {
+      console.error("Fel vid loggning:", error);
+    });
+  };
+</script>
+
+ <button class="buttonL" onclick="left()">
+  <i class="fas fa-chevron-left"></i>
+</button>
+<button class="buttonR" onclick="right()">
+  <i class="fas fa-chevron-right"></i>
+</button>
+
+
+<div class="slider">
+
+  <div class="first slide" id="1" onclick="logClick(1)">
+    <img src="source/first.jpg" alt=""></button>
+  </div>
+  <div class="second slide" id="2" onclick="logClick(2)">
+    <img  src="source/second.png" alt="">
+  </div>
+  <div class="third slide" id="3" onclick="logClick(3)">
+    <img src="source/third.png" alt="">
+    <div class="slideInformation">
+    <a href="2.html"><button class="sliderButton">DESIGNA</button></a>
+  </div>
+  </div>
+  <div class="fourth slide" id="4" onclick="logClick(4)">
+    <img src="source/forth.png" alt="">
+  </div>
+  <div class="fifth slide" id="5" onclick="logClick(5)">
+    <img src="source/fifth.jpg" alt="">
+  </div>
+</div>
+
+
+<script src="script/script.js"></script>
 </body>
+</html>

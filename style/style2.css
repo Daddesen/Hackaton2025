@@ -1,0 +1,159 @@
+*{
+    font-family:'Courier New', Courier, monospace;
+    margin: 0;
+    overflow: hidden;
+}
+
+::-webkit-scrollbar {
+    display: none;
+}
+
+/*===========================================================================================
+
+Header
+
+=============================================================================================*/
+
+header{
+  background-color: #ffffff;
+  height: 4em;
+  display: flex;
+  overflow-y: hidden;
+}
+
+.title{
+  position: relative;
+  left: 1em;
+  top: 50%;
+  bottom: 50%;
+  transform: translateY(-45%);
+  font-size: 3em;
+  color: black;
+}
+
+a img{
+    height: 6em;
+    margin-top: -1em;
+}
+
+.sideNavOpener{
+  position: absolute;
+  right: 0;
+  top: 0.9em;
+  margin-right: 3em;
+  height: 3em;
+  width: 3em;
+  border-radius: 100em;
+  border: unset;
+  background-color: rgb(230, 230, 230);
+  transition: 0.1s;
+}
+.sideNavOpener:hover{
+  cursor: pointer;
+  box-shadow: 2px 2px 3px grey;
+}
+
+.sideNav{
+  position: absolute;
+  right: 0;
+  z-index: 11 !important;
+  width: 20%;
+  height: 100vh;
+  background-color: white;
+  border-left: 1px solid black;
+
+  display: none;
+  flex-direction: column; 
+  align-items: flex-start; 
+  padding: 10px;
+  
+  h1{
+    position: relative;
+    top: 1.5em;
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+    font-size: 3em;
+  }
+}
+.sideNav.open{
+  transform: translateX(0);
+  display: flex;
+}
+
+.sideNavItem{
+  position: relative;
+  top: 10em;
+  margin-left: auto;
+  margin-right: auto;
+}
+.sideNavContent {
+  display: none;
+  padding: 10px;
+  background-color: #f0f0f0;
+  border-left: 2px solid #ccc;
+  margin-top: 5px;
+}
+.sideNavButton {
+
+  margin-top: 1em;
+  padding: 10px;
+  background: #ddd;
+  border: none;
+  cursor: pointer;
+
+  border-radius: 1em;
+  padding: 1em;
+  font-size: 1.4em;
+}
+.sideNavButton:hover {
+  background: #ccc;
+}
+/*===========================================================================================
+
+Body
+
+=============================================================================================*/
+body{
+    background-color: rgb(230, 230, 230);
+}
+
+.flex-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2em;
+  margin: 2em;
+  padding: 2em;
+  justify-content: center;
+}
+
+.item {
+  flex: 1 1 calc(50% - 2em); /* 2 items per row with spacing */
+  height: 40vh; /* Or your preferred height */
+  background-color: white;
+  border-radius: 0.5em;
+  padding: 1em;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.item h3{
+  position: absolute;
+}
+.item:hover{
+  box-shadow: 5px 5px 10px grey;
+}
+
+@media (max-width: 768px) {
+  .item {
+    flex: 1 1 100%; /* stack vertically */
+  }
+}
+
+.item img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  flex-grow: 1;
+}
