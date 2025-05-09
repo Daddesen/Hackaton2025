@@ -1,63 +1,215 @@
 *{
     font-family:'Courier New', Courier, monospace;
-    overflow-x: hidden;
+    margin: 0;
+    overflow: hidden;
+}
+
+::-webkit-scrollbar {
+    display: none;
+}
+
+/*===========================================================================================
+
+Header
+
+=============================================================================================*/
+
+header{
+  background-color: #ffffff;
+  height: 4em;
+  display: flex;
+  overflow-y: hidden;
+}
+
+.title{
+  position: relative;
+  left: 1em;
+  top: 50%;
+  bottom: 50%;
+  transform: translateY(-45%);
+  font-size: 3em;
+  color: black;
+}
+
+a img{
+    height: 6em;
+    margin-top: -1em;
+}
+
+.sideNavOpener{
+  position: absolute;
+  right: 0;
+  top: 0.9em;
+  margin-right: 3em;
+  height: 3em;
+  width: 3em;
+  border-radius: 100em;
+  border: unset;
+  background-color: rgb(230, 230, 230);
+}
+.sideNavOpener:hover{
+  cursor: pointer;
+}
+
+.sideNav{
+  position: absolute;
+  right: 0;
+  z-index: 11 !important;
+  width: 20%;
+  height: 100vh;
+  background-color: white;
+  border-left: 1px solid black;
+
+  display: none;
+  flex-direction: column; 
+  align-items: flex-start; 
+  padding: 10px;
+
+  h1{
+    position: relative;
+    top: 1.5em;
+    text-align: center;
+    font-size: 3em;
+  }
+}
+.sideNav.open{
+  transform: translate();
+  display: flex;
+}
+
+.sideNavButton {
+  position: relative;
+  top: 8em;
+  display: block;
+  margin-bottom: 10px;
+  width: 100%; 
+  background-color: rgb(230, 230, 230);
+  margin-left: auto;
+  margin-right: auto;
+
+  height: 3em;
+  border-radius: 10em;
+  width: 20em;
+  margin-top: 2em;
+
+  font-size: 1em;
+  font-weight: bold;
+}
+.sideNavButton:hover{
+  cursor: pointer;
+}
+/*===========================================================================================
+
+Body
+
+=============================================================================================*/
+body{
+    background-color: rgb(230, 230, 230);
 }
 
 .first{
-    transform: rotateY(40deg);
-    transform: translate(20vw 50vh);
+    transform: rotateY(50deg);
     perspective: 10em;
     z-index: 2;
+    scale: 0.7;
+    box-shadow: 0px 5px 10px black;
+    margin: -3em !important;
 }
+
 .second{
-    transform: rotateY(20deg);
-    transform: translate(30vw 50vh);
+    transform: rotateY(30deg);
     perspective: 5em;
     z-index: 3;
+    scale: 0.9;
+    box-shadow: 0px 5px 10px black;
 }
+
 .third{
     perspective: 1em;
-    transform: translate(50vw 50vh);
     z-index: 4;
+    box-shadow: 0px 5px 10px black;
 }
+
 .fourth{
-    transform: rotate(340deg);
-    transform: translate(70vw 50vh);
+    transform: rotateY(330deg);
     perspective: 5em;
     z-index: 3;
+    scale: 0.9;
+    box-shadow: 0px 5px 10px black;
 }
+
 .fifth{
-    transform: rotateY(320deg);
-    transform: translate(80vw 50vh);
+    transform: rotateY(310deg);
     perspective: 10em;
     z-index: 2;
-    
+    scale: 0.7;
+    margin: -3em !important;
+    box-shadow: 0px 5px 10px black;
+
 }
 
 .slide{
-    box-shadow: 5px 5px black;
-    border-radius: 2em;
-    border: #CCC 0.1em;
-    box-shadow: black 0.5em;
-    display: inline-block;
+    /*box-shadow: 5px 5px black;*/
+    border-radius: 0.5em;
+    border: solid #CCC 0.1em;
+    margin: -1em;
+    background-color: white;
+    padding: 5em 0.5em;
+}
+.slide:hover{
+  cursor: pointer;
 }
 
-.slideinformation{
-    transform: translate(50vw 50vh);
-    z-index: 5;
+.slider{
+  display: flex;
+  padding: 3em 2em;
+  position: absolute;
+  top: 15%;
+  margin-left: 4em;
+  perspective: 100em;
+  
+}
+
+
+
+.slideInformation{
+    position: absolute;
+    top: 37em;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    button{
+        border: none;
+        padding: 1em;
+        border-radius: 0.2em;
+    }
+
+    button:hover{
+        cursor: pointer;
+    }
 }
   .slider > div {
     flex: 0 0 auto;
-    width: 100%; /* or set a specific width like 600px */
+    width: 20vw; /* or set a specific width like 600px */
     position: relative;
-    padding: 1em;
   }
 
   .slider img {
     width: 20vw;
     height: auto;
     display: block;
+    
   }
+
+  .slide img {
+  transition: opacity 0.5s ease;
+  opacity: 1;
+}
+
+img.fade-out {
+  opacity: 0;
+}
+
 
   .buttonL, .buttonR {
     position: absolute;
@@ -69,7 +221,18 @@
     color: white;
     padding: 1rem;
     cursor: pointer;
+    border-radius: 7px;
+    margin: 0 5px;
+    transition: 0.1s;
   }
+  .buttonL i, .buttonR i {
+  font-size: 2em;
+}
+
+.buttonL:hover , .buttonR:hover {
+    box-shadow: 0px 0px 3px black;
+    
+}
 
   .buttonL {
     left: 0;

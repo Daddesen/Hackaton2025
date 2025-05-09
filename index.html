@@ -1,56 +1,91 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style/style.css">
-    <title>Pimp My Gear</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="style/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
 </head>
+
+<header>
+  <a href="index.html"><img src="source/logo.png" alt="" class="logo"> </a>
+  <button class="sideNavOpener" onclick="toggleSideNav()">☰</button>
+</header>
+<hr>
 <body>
-    <header>
-        <h1>
-            Pimp My Gear
-        </h1>
-        <nav>
-            <span>
-                Meny :
-            </span>
-            <span>
-                Om Oss :
-            </span>
-            <span>
-                Hjälp
-            </span>
-        </nav>
-        <img src="" alt="" class="logo"> 
-    </header>
+  <div class="sideNav">
+    <h1>Pimp My Gear</h1>
+    <button class="sideNavButton">Meny</button>
+    <button class="sideNavButton">Om Oss</button>
+    <button class="sideNavButton">Hjälp</button>
+  </div>
+  <script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+  import { getDatabase, ref, runTransaction } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+  import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-analytics.js";
 
-    <div class="slider">
-        <button class="buttonL"></button>
-        <button class="buttonR"></button>
+ const firebaseConfig = {
+  apiKey: "AIzaSyD6pXVnnt3r5DkJiTd2nIof5-I9dp9crWM",
+  authDomain: "pmgdb-c787b.firebaseapp.com",
+  projectId: "pmgdb-c787b",
+  storageBucket: "pmgdb-c787b.appspot.com",
+  messagingSenderId: "691927928441",
+  appId: "1:691927928441:web:4207256ef0862fb7828ea8",
+  measurementId: "G-07PD5DVLLL",
+  databaseURL: "https://pmgdb-c787b-default-rtdb.europe-west1.firebasedatabase.app"  // ← Lägg till denna rad!
+};
 
-        <div class="first slide">
-            <img src="source/first.jpg" alt="">
-        </div>
-        <div class="second slide">
-            <img src="source/second.png" alt="">
-        </div>
-        <div class="third slide">
-            <img src="source/third.png" alt="">
-        </div>
-        <div class="forth slide">
-            <img src="source/forth.png" alt="">
-        </div>
-        <div class="fifth slide">
-            <img src="" alt="">
-        </div>
-        <div class="slideInformation">
-            <h1 class="slideTitle"></h1>
-            <p class="sliderButton"></p>
-        </div>
-    </div>
-    
-  <script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js"></script>  
-  <script src="script/script.js"></script>
+
+  const app = initializeApp(firebaseConfig);
+  const analytics = getAnalytics(app);
+  const db = getDatabase(app);
+
+  window.logClick = function (buttonNumber) {
+    const countRef = ref(db, 'buttonClicks/button' + buttonNumber);
+    runTransaction(countRef, (currentValue) => {
+      return (currentValue || 0) + 1;
+    }).then(() => {
+      console.log("Klick loggat för knapp", buttonNumber);
+    }).catch((error) => {
+      console.error("Fel vid loggning:", error);
+    });
+  };
+</script>
+
+ <button class="buttonL" onclick="left()">
+  <i class="fas fa-chevron-left"></i>
+</button>
+<button class="buttonR" onclick="right()">
+  <i class="fas fa-chevron-right"></i>
+</button>
+
+
+<div class="slider">
+
+  <div class="first slide" id="1" onclick="logClick(1)">
+    <img src="source/first.jpg" alt=""></button>
+  </div>
+  <div class="second slide" id="2" onclick="logClick(2)">
+    <img  src="source/second.png" alt="">
+  </div>
+  <div class="third slide" id="3" onclick="logClick(3)">
+    <img src="source/third.png" alt="">
+  </div>
+  <div class="fourth slide" id="4" onclick="logClick(4)">
+    <img src="source/forth.png" alt="">
+  </div>
+  <div class="fifth slide" id="5" onclick="logClick(5)">
+    <img src="source/fifth.jpg" alt="">
+  </div>
+</div>
+
+<div class="slideInformation">
+  <button class="sliderButton">designa</button>
+</div>
+
+
+<script src="script/script.js"></script>
 </body>
 </html>
