@@ -149,7 +149,6 @@ document.querySelectorAll(".component").forEach((component) => {
 
     // Activate the clicked one
     component.dataset.active = "true";
-
     // Update the header text
     const header = document.getElementById("menu-header");
     header.textContent = component.textContent.trim();
@@ -237,38 +236,49 @@ function init3D() {
       const highlightColor = new THREE.Color(0xffffff); // Light color for selection
 
       // Utility to reset all parts to default color
-      function resetModelColors() {
-        model.traverse((child) => {
-          if (child.isMesh) {
-            child.material = child.material.clone(); // Clone to prevent sharing
-            child.material.color.copy(defaultColor);
-          }
-        });
-      }
 
       // Utility to highlight a part group by index
-      function highlightPartGroup(index) {
+      function highlightPartGroup(indexToHighlight) {
         if (!model) return;
 
         model.traverse((child) => {
           if (!child.isMesh) return;
 
-          // Find which group this mesh belongs to
-          let foundIndex = parts.findIndex((group) =>
+          child.material = child.material.clone(); // prevent shared material state
+
+          // Find the index this mesh belongs to
+          const partIndex = parts.findIndex((group) =>
             group.includes(child.name)
           );
-          if (foundIndex !== -1) {
-            const savedColor = appliedColors[foundIndex] || "#aaaaaa";
-            child.material = child.material.clone();
-            child.material.color.set(savedColor);
+
+          if (partIndex === indexToHighlight) {
+            // Highlighted component
+            const highlightColor = appliedColors[partIndex] || "#ffffff";
+            child.material.color.set(highlightColor);
+            child.material.emissive = new THREE.Color(highlightColor); // Add glow
+            child.material.emissiveIntensity = 0.4;
+          } else if (partIndex !== -1) {
+            // Dim or normal color for non-selected components
+            const baseColor = appliedColors[partIndex] || "#aaaaaa";
+            child.material.color.set(baseColor);
+            child.material.emissive = new THREE.Color(0x000000);
+            child.material.emissiveIntensity = 0.0;
           }
         });
       }
 
+      highlightPartGroup(0);
+
       // Hook component buttons to color logic
       document.querySelectorAll(".component").forEach((component, index) => {
         component.addEventListener("click", () => {
-          activeComponentIndex = index; // now it's correctly scoped
+          if (index === 0) {
+            // If "Back" button is clicked
+            window.location.href = "index.html"; // Or any desired page
+            return;
+          }
+
+          activeComponentIndex = index - 1; // Shifted by 1 due to "Back" button
           document
             .querySelectorAll(".component")
             .forEach((c) => (c.dataset.active = "false"));
@@ -277,9 +287,10 @@ function init3D() {
           document.getElementById("menu-header").textContent =
             component.textContent.trim();
 
-          highlightPartGroup(index); // highlight selected part group
+          highlightPartGroup(activeComponentIndex);
         });
       });
+
       // Create a small red sphere at the pivot point
       const geometry = new THREE.SphereGeometry(0.1, 32, 32); // Small sphere
       const material = new THREE.MeshBasicMaterial({ color: 0xff0000 }); // Red color
@@ -358,10 +369,40 @@ window.addEventListener("resize", () => {
 });
 
 init3D();
-
 // Add event listener to the "Rotera" button to toggle auto-rotation
 document.getElementById("rotate-btn").addEventListener("click", () => {
   isAutoRotating = !isAutoRotating; // Toggle the rotation state
   const buttonText = isAutoRotating ? "Start Rotation" : "Stopp Rotation";
   document.getElementById("rotate-btn").textContent = buttonText; // Change button text
 });
+
+function deleteComponentByName(componentName) {
+  if (!model) return;
+
+  const objectToRemove = model.getObjectByName(componentName);
+  if (objectToRemove) {
+    model.remove(objectToRemove);
+    objectToRemove.geometry.dispose();
+    if (objectToRemove.material.map) objectToRemove.material.map.dispose();
+    objectToRemove.material.dispose();
+  }
+}
+
+function replaceComponent(oldName, newGLBPath) {
+  const oldPart = model.getObjectByName(oldName);
+  if (!oldPart) return;
+
+  oldPart.visible = false; // hide original
+
+  const loader = new GLTFLoader();
+  loader.load(newGLBPath, (gltf) => {
+    const replacement = gltf.scene;
+    replacement.name = `ReplacementFor_${oldName}`;
+    replacement.position.copy(oldPart.position);
+    replacement.rotation.copy(oldPart.rotation);
+    replacement.scale.copy(oldPart.scale);
+    model.add(replacement);
+  });
+}
+
+deleteComponentByName("Solid1"); // Deletes a specific part, like one of the handles
