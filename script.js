@@ -125,7 +125,6 @@ const colors = [
   "#4682b4", // Steel Blue
 ];
 
-
 let currentModelIndex = 0; // tracks current loaded model index
 
 
@@ -138,7 +137,6 @@ document.querySelectorAll(".component").forEach((component, index) => {
     if (currentModelIndex === targetModelIndex) {
       targetModelIndex = 0;
     }
-
 
     loadModel(modelsArray[targetModelIndex]);
     currentModelIndex = targetModelIndex;
@@ -364,9 +362,20 @@ document.getElementById("k1").addEventListener("click", () => {
   loadModel(modelsArray[1]);
 });
 
-
 let shownmodel = 0;
+document.querySelectorAll(".color-box").forEach((box, i) => {
+  box.addEventListener("click", () => {
+    indexx = parseInt(box.id.charAt(1), 10);
 
+    if (shownmodel !== indexx) {
+      shownmodel = indexx;
+    } else {
+      indexx = 0; // Toggle back to base model
+    }
+
+    init3D(); // ❌ This reloads a GLB file!
+  });
+});
 
 function animate() {
   requestAnimationFrame(animate);
