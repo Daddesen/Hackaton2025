@@ -46,9 +46,11 @@ a img{
   border-radius: 100em;
   border: unset;
   background-color: rgb(230, 230, 230);
+  transition: 0.1s;
 }
 .sideNavOpener:hover{
   cursor: pointer;
+  box-shadow: 2px 2px 3px grey;
 }
 
 .sideNav{
@@ -64,7 +66,7 @@ a img{
   flex-direction: column; 
   align-items: flex-start; 
   padding: 10px;
-
+  
   h1{
     position: relative;
     top: 1.5em;
@@ -73,7 +75,7 @@ a img{
   }
 }
 .sideNav.open{
-  transform: translate();
+  transform: translateX(0);
   display: flex;
 }
 
@@ -174,18 +176,29 @@ body{
 
 .slideInformation{
     position: absolute;
-    top: 37em;
+    top: 36em;
     left: 50%;
     transform: translate(-50%, -50%);
 
     button{
         border: none;
         padding: 1em;
-        border-radius: 0.2em;
+        border-radius: 0.5em;
+        background-color: hsl(230, 230, 230);
+        font-weight: bold;
+        font-size: 1.2em;
+        margin: 0.2em;
+        transition: 0.35;
+    }
+
+    a{
+        text-decoration: none;
+        color: black;
     }
 
     button:hover{
         cursor: pointer;
+        box-shadow: 2px 2px 3px grey;
     }
 }
   .slider > div {
