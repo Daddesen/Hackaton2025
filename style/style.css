@@ -71,6 +71,8 @@ a img{
     position: relative;
     top: 1.5em;
     text-align: center;
+    margin-left: auto;
+    margin-right: auto;
     font-size: 3em;
   }
 }
@@ -79,26 +81,33 @@ a img{
   display: flex;
 }
 
-.sideNavButton {
+.sideNavItem{
   position: relative;
-  top: 8em;
-  display: block;
-  margin-bottom: 10px;
-  width: 100%; 
-  background-color: rgb(230, 230, 230);
+  top: 10em;
   margin-left: auto;
   margin-right: auto;
-
-  height: 3em;
-  border-radius: 10em;
-  width: 20em;
-  margin-top: 2em;
-
-  font-size: 1em;
-  font-weight: bold;
 }
-.sideNavButton:hover{
+.sideNavContent {
+  display: none;
+  padding: 10px;
+  background-color: #f0f0f0;
+  border-left: 2px solid #ccc;
+  margin-top: 5px;
+}
+.sideNavButton {
+
+  margin-top: 1em;
+  padding: 10px;
+  background: #ddd;
+  border: none;
   cursor: pointer;
+
+  border-radius: 1em;
+  padding: 1em;
+  font-size: 1.4em;
+}
+.sideNavButton:hover {
+  background: #ccc;
 }
 /*===========================================================================================
 
@@ -167,16 +176,15 @@ body{
   padding: 3em 2em;
   position: absolute;
   top: 15%;
-  margin-left: 4em;
+  margin-left: 4.1em;
   perspective: 100em;
-  
 }
 
 
 
 .slideInformation{
     position: absolute;
-    top: 36em;
+    top: 90%;
     left: 50%;
     transform: translate(-50%, -50%);
 

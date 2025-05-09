@@ -71,6 +71,8 @@ a img{
     position: relative;
     top: 1.5em;
     text-align: center;
+    margin-left: auto;
+    margin-right: auto;
     font-size: 3em;
   }
 }
@@ -79,26 +81,33 @@ a img{
   display: flex;
 }
 
-.sideNavButton {
+.sideNavItem{
   position: relative;
-  top: 8em;
-  display: block;
-  margin-bottom: 10px;
-  width: 100%; 
-  background-color: rgb(230, 230, 230);
+  top: 10em;
   margin-left: auto;
   margin-right: auto;
-
-  height: 3em;
-  border-radius: 10em;
-  width: 20em;
-  margin-top: 2em;
-
-  font-size: 1em;
-  font-weight: bold;
 }
-.sideNavButton:hover{
+.sideNavContent {
+  display: none;
+  padding: 10px;
+  background-color: #f0f0f0;
+  border-left: 2px solid #ccc;
+  margin-top: 5px;
+}
+.sideNavButton {
+
+  margin-top: 1em;
+  padding: 10px;
+  background: #ddd;
+  border: none;
   cursor: pointer;
+
+  border-radius: 1em;
+  padding: 1em;
+  font-size: 1.4em;
+}
+.sideNavButton:hover {
+  background: #ccc;
 }
 /*===========================================================================================
 
@@ -109,18 +118,44 @@ body{
     background-color: rgb(230, 230, 230);
 }
 
-.grid{
-    display: grid;
-    grid-template-rows: 1fr 1fr;
-    grid-template-columns: 1fr 1fr;
-    gap: 2em;
-    margin: 1.9em;
-    place-items: center;
+/*.grid {
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+  grid-template-columns: 1fr 1fr;
+  gap: 2em;
+  margin: 1.9em;
+  height: 80vh;
+  place-items: stretch;
+}
+
+.grid > div {
+  width: 100%;
+  height: 100%;
+}
+
+.white {
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+  background-color: white;
+  padding: 0.5em;
+  border-radius: 0.5em;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.white img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  flex-grow: 1;
 }
 
 .one{
     grid-row: 1;
     grid-column: 1;
+    
 }
 
 .two{
@@ -155,4 +190,41 @@ img{
         margin: 1.5em 2em;
 
     }
+}*/
+
+.flex-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2em;
+  margin: 2em;
+  padding: 2em;
+  justify-content: center;
+}
+
+.item {
+  flex: 1 1 calc(50% - 2em); /* 2 items per row with spacing */
+  height: 40vh; /* Or your preferred height */
+  background-color: white;
+  border-radius: 0.5em;
+  padding: 1em;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.item:hover{
+  box-shadow: 5px 5px 10px grey;
+}
+
+@media (max-width: 768px) {
+  .item {
+    flex: 1 1 100%; /* stack vertically */
+  }
+}
+
+.item img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  flex-grow: 1;
 }

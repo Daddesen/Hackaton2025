@@ -16,11 +16,30 @@
 <hr>
 <body>
   <div class="sideNav">
-    <h1>Pimp My Gear</h1>
-    <button class="sideNavButton">Meny</button>
-    <button class="sideNavButton">Om Oss</button>
-    <button class="sideNavButton">Hjälp</button>
+  <h1>Pimp My Gear</h1>
+
+  <div class="sideNavItem">
+    <button class="sideNavButton" onclick="toggleContent('menyContent')">Meny</button>
+    <div id="menyContent" class="sideNavContent">
+      <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Odit, omnis. Itaque iusto eum ut magnam deleniti id autem unde eveniet recusandae tempora, ullam sequi quis accusantium delectus excepturi facilis error.</p>
+    </div>
   </div>
+
+  <div class="sideNavItem">
+    <button class="sideNavButton" onclick="toggleContent('omOssContent')">Om Oss</button>
+    <div id="omOssContent" class="sideNavContent">
+      <p>Denna sidan hjälper er genom... Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta voluptatem nam numquam deleniti ipsum ex error minima atque voluptas provident iusto qui, reprehenderit eos nobis iste hic alias commodi dolore.</p>
+    </div>
+  </div>
+
+  <div class="sideNavItem">
+    <button class="sideNavButton" onclick="toggleContent('hjalpContent')">Hjälp</button>
+    <div id="hjalpContent" class="sideNavContent">
+      <p>Behöver du hjälp? Kontakta oss på... Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellendus molestias dignissimos aliquam atque qui, minima quos sint unde, aliquid provident non deleniti fugit, accusantium ipsam at delectus corrupti beatae laboriosam?</p>
+    </div>
+  </div>
+</div>
+
   <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
   import { getDatabase, ref, runTransaction } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
@@ -72,6 +91,9 @@
   </div>
   <div class="third slide" id="3" onclick="logClick(3)">
     <img src="source/third.png" alt="">
+    <div class="slideInformation">
+    <a href="2.html"><button class="sliderButton">designa</button></a>
+  </div>
   </div>
   <div class="fourth slide" id="4" onclick="logClick(4)">
     <img src="source/forth.png" alt="">
@@ -79,10 +101,6 @@
   <div class="fifth slide" id="5" onclick="logClick(5)">
     <img src="source/fifth.jpg" alt="">
   </div>
-</div>
-
-<div class="slideInformation">
-  <button class="sliderButton"><a href="2.html">designa</a></button>
 </div>
 
 
