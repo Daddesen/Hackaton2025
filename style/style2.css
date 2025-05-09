@@ -123,6 +123,7 @@ body{
   flex-wrap: wrap;
   gap: 2em;
   margin: 2em;
+  margin-top: 1em;
   padding: 2em;
   justify-content: center;
 }
