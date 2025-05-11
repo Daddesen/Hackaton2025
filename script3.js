@@ -175,7 +175,7 @@ document.querySelectorAll(".component").forEach((component) => {
 document.addEventListener("DOMContentLoaded", () => {
   const klarButton = document.getElementById("klar");
   klarButton.addEventListener("click", () => {
-    window.location.href = "done.html"; // Replace with your desired page
+    window.location.href = "index.html"; // Replace with your desired page
   });
 });
 
@@ -193,7 +193,7 @@ document.querySelectorAll(".component").forEach((component) => {
 document.addEventListener("DOMContentLoaded", () => {
   const klarButton = document.getElementById("klar");
   klarButton.addEventListener("click", () => {
-    window.location.href = "done.html"; // Redirect when "Klar" is clicked
+    window.location.href = "index.html"; // Redirect when "Klar" is clicked
   });
 });
 
